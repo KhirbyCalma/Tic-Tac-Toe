@@ -41,9 +41,9 @@ function createBoard() {
         for (let row = 0; row < rows; row++) {
             for (let column = 0; column < columns; column++) {
                 if (column !== columns - 1) {
-                    boardString += board[row][column] + "|";
+                    boardString += (board[row][column] !== null ? board[row][column].getMarker() : " ") + "|";
                 } else {
-                    boardString += board[row][column];
+                    boardString += (board[row][column] !== null ? board[row][column].getMarker() : " ");
                 }
 
             }
@@ -73,25 +73,31 @@ const gameController = (function (
 
     // public methods
     const playRound = () => {
-        while (ticTacToeBoard.getAvailableCells().length >= 2) {
-            // now human turn
-            console.log(ticTacToeBoard.toString());
-            let rowChoice = +prompt("Row?");
-            let columnChoice = +prompt("Column?");
-            while (!arrayInArray(ticTacToeBoard.getAvailableCells(), [rowChoice, columnChoice])) {
-                rowChoice = +prompt("Diff. Row?");
-                columnChoice = +prompt("Diff. Column?");
+        while (ticTacToeBoard.getAvailableCells().length >= 1) {
+            if (activePlayer == humanPlayer) {
+                console.log("HUMAN START");
+                console.log(ticTacToeBoard.toString());
+                let rowChoice = +prompt("Row?");
+                let columnChoice = +prompt("Column?");
+                while (!arrayInArray(ticTacToeBoard.getAvailableCells(), [rowChoice, columnChoice])) {
+                    rowChoice = +prompt("Diff. Row?");
+                    columnChoice = +prompt("Diff. Column?");
+                }
+                ticTacToeBoard.placePlayer(rowChoice, columnChoice, activePlayer);
+                console.log(ticTacToeBoard.toString());
+                console.log("HUMAN END");
+            } else {
+                console.log("COMPUTER START");
+                const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
+                const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
+                ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
+                console.log(ticTacToeBoard.toString());
+                console.log("COMPUTER END");
             }
-            ticTacToeBoard.placePlayer(rowChoice, columnChoice, activePlayer);
-            // now computer turn
-            switchActivePlayer();
-            const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
-            const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
-            ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
-            console.log(ticTacToeBoard.toString());
             // go back to human for upcoming turn
             switchActivePlayer();
         }
+        console.log(ticTacToeBoard.toString());
     }
     const getTicTacToeBoard = () => ticTacToeBoard;
     const getHumanPlayer = () => humanPlayer;
