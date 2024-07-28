@@ -34,14 +34,23 @@ const gameController = (function (
     humanPlayer = createPlayer("You", "X"), 
     computerPlayer = createPlayer("Computer", "O") 
 ) {
+    // private variables and methods
+    let activePlayer = humanPlayer; // start with human player first
+
+    const switchActivePlayer = () => {
+        activePlayer = (activePlayer === humanPlayer) ? computerPlayer : humanPlayer; 
+    }
+
     // public methods
     const getTicTacToeBoard = () => ticTacToeBoard;
     const getHumanPlayer = () => humanPlayer;
     const getComputerPlayer = () => computerPlayer;
+    const getActivePlayer = () => activePlayer;
     return {
         getTicTacToeBoard,
         getHumanPlayer,
-        getComputerPlayer
+        getComputerPlayer,
+        getActivePlayer
     }
 })();
 
