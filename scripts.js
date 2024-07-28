@@ -77,7 +77,7 @@ const gameController = (function (
         console.log(ticTacToeBoard.toString());
         const rowChoice = prompt("Row?");
         const columnChoice = prompt("Column?");
-        ticTacToeBoard.placePlayer(rowChoice - 1, columnChoice - 1, activePlayer);
+        ticTacToeBoard.placePlayer(rowChoice, columnChoice, activePlayer);
         // now computer turn
         switchActivePlayer();
         const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
