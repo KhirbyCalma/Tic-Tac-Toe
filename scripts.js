@@ -25,6 +25,9 @@ function createBoard() {
     const placePlayer = (row, column, player) => {
         board[row][column] = player;
     }
+    const checkPlayerInCell = (row, column, player) => {
+        return board[row][column] === player;
+    }
     const getAvailableCells = () => {
         let availableCellArray = [];
         for (let row = 0; row < rows; row++) {
@@ -36,6 +39,18 @@ function createBoard() {
         }
         return availableCellArray;
     }
+    const checkWinner = (player) => {
+        return (
+            (checkPlayerInCell(0, 0, player) && checkPlayerInCell(0, 1, player) && checkPlayerInCell(0, 2, player)) ||
+            (checkPlayerInCell(1, 0, player) && checkPlayerInCell(1, 1, player) && checkPlayerInCell(1, 2, player)) ||
+            (checkPlayerInCell(2, 0, player) && checkPlayerInCell(2, 1, player) && checkPlayerInCell(2, 2, player)) ||
+            (checkPlayerInCell(0, 0, player) && checkPlayerInCell(1, 0, player) && checkPlayerInCell(2, 0, player)) ||
+            (checkPlayerInCell(0, 1, player) && checkPlayerInCell(1, 1, player) && checkPlayerInCell(2, 1, player)) ||
+            (checkPlayerInCell(0, 2, player) && checkPlayerInCell(1, 2, player) && checkPlayerInCell(2, 2, player)) ||
+            (checkPlayerInCell(0, 0, player) && checkPlayerInCell(1, 1, player) && checkPlayerInCell(2, 2, player)) ||
+            (checkPlayerInCell(2, 0, player) && checkPlayerInCell(1, 1, player) && checkPlayerInCell(0, 2, player)) 
+        );
+    } 
     const toString = () => {
         let boardString = "";
         for (let row = 0; row < rows; row++) {
@@ -51,7 +66,7 @@ function createBoard() {
         }
         return boardString;
     }
-    return { getBoard, placePlayer, getAvailableCells, toString };
+    return { getBoard, placePlayer, checkPlayerInCell, getAvailableCells, checkWinner, toString };
 }
 
 
@@ -93,6 +108,15 @@ const gameController = (function (
                 ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
                 console.log(ticTacToeBoard.toString());
                 console.log("COMPUTER END");
+            }
+            if (ticTacToeBoard.checkWinner(activePlayer)) {
+                console.log(`${activePlayer.getName()} won!`);
+                break;
+            }
+            // tie
+            else if (ticTacToeBoard.getAvailableCells().length === 0) {
+                console.log(`It is a tie.`);
+                break;
             }
             // go back to human for upcoming turn
             switchActivePlayer();
