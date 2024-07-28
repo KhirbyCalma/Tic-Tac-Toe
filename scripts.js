@@ -25,6 +25,17 @@ function createBoard() {
     const placePlayer = (row, column, player) => {
         board[row][column] = player;
     }
+    const getAvailableCells = () => {
+        let availableCellArray = [];
+        for (let row = 0; row < rows; row++) {
+            for (let column = 0; column < columns; column++) {
+                if (board[row][column] === null) {
+                    availableCellArray.push([row, column]);
+                }
+            }
+        }
+        return availableCellArray;
+    }
     const toString = () => {
         let boardString = "";
         for (let row = 0; row < rows; row++) {
@@ -40,7 +51,7 @@ function createBoard() {
         }
         return boardString;
     }
-    return { getBoard, placePlayer, toString };
+    return { getBoard, placePlayer, getAvailableCells, toString };
 }
 
 
@@ -62,12 +73,16 @@ const gameController = (function (
 
     // public methods
     const playRound = () => {
+        // now human turn
         console.log(ticTacToeBoard.toString());
-        if (activePlayer === humanPlayer) {
-            const rowChoice = prompt("Row?");
-            const columnChoice = prompt("Column?");
-            ticTacToeBoard.placePlayer(rowChoice - 1, columnChoice - 1, activePlayer);
-        }
+        const rowChoice = prompt("Row?");
+        const columnChoice = prompt("Column?");
+        ticTacToeBoard.placePlayer(rowChoice - 1, columnChoice - 1, activePlayer);
+        // now computer turn
+        switchActivePlayer();
+        const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
+        const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
+        ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
         console.log(ticTacToeBoard.toString());
     }
     const getTicTacToeBoard = () => ticTacToeBoard;
