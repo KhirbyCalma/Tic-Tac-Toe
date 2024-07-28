@@ -84,6 +84,8 @@ const gameController = (function (
         const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
         ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
         console.log(ticTacToeBoard.toString());
+        // go back to human for upcoming turn
+        switchActivePlayer();
     }
     const getTicTacToeBoard = () => ticTacToeBoard;
     const getHumanPlayer = () => humanPlayer;
