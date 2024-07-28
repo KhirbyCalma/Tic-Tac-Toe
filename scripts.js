@@ -73,19 +73,25 @@ const gameController = (function (
 
     // public methods
     const playRound = () => {
-        // now human turn
-        console.log(ticTacToeBoard.toString());
-        const rowChoice = prompt("Row?");
-        const columnChoice = prompt("Column?");
-        ticTacToeBoard.placePlayer(rowChoice, columnChoice, activePlayer);
-        // now computer turn
-        switchActivePlayer();
-        const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
-        const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
-        ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
-        console.log(ticTacToeBoard.toString());
-        // go back to human for upcoming turn
-        switchActivePlayer();
+        while (ticTacToeBoard.getAvailableCells().length >= 2) {
+            // now human turn
+            console.log(ticTacToeBoard.toString());
+            let rowChoice = +prompt("Row?");
+            let columnChoice = +prompt("Column?");
+            while (!arrayInArray(ticTacToeBoard.getAvailableCells(), [rowChoice, columnChoice])) {
+                rowChoice = +prompt("Diff. Row?");
+                columnChoice = +prompt("Diff. Column?");
+            }
+            ticTacToeBoard.placePlayer(rowChoice, columnChoice, activePlayer);
+            // now computer turn
+            switchActivePlayer();
+            const computerAvailableCellArray = ticTacToeBoard.getAvailableCells();
+            const [computerRowChoice, computerColumnChoice] = computerAvailableCellArray[Math.floor(Math.random() * computerAvailableCellArray.length)];
+            ticTacToeBoard.placePlayer(computerRowChoice, computerColumnChoice, activePlayer);
+            console.log(ticTacToeBoard.toString());
+            // go back to human for upcoming turn
+            switchActivePlayer();
+        }
     }
     const getTicTacToeBoard = () => ticTacToeBoard;
     const getHumanPlayer = () => humanPlayer;
@@ -102,3 +108,9 @@ const gameController = (function (
 
 gameController.playRound();
 
+function arrayInArray(outerArray, innerArray) {
+    return outerArray.some(subArray => 
+      subArray.length === innerArray.length && 
+      subArray.every((value, index) => value === innerArray[index])
+    );
+  }
