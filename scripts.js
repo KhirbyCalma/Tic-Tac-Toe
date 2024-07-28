@@ -22,6 +22,9 @@ function createBoard() {
     }
     // public methods
     const getBoard = () => board;
+    const placePlayer = (row, column, player) => {
+        board[row][column] = player;
+    }
     const toString = () => {
         let boardString = "";
         for (let row = 0; row < rows; row++) {
@@ -37,7 +40,7 @@ function createBoard() {
         }
         return boardString;
     }
-    return { getBoard, toString };
+    return { getBoard, placePlayer, toString };
 }
 
 
@@ -58,11 +61,21 @@ const gameController = (function (
     }
 
     // public methods
+    const playRound = () => {
+        console.log(ticTacToeBoard.toString());
+        if (activePlayer === humanPlayer) {
+            const rowChoice = prompt("Row?");
+            const columnChoice = prompt("Column?");
+            ticTacToeBoard.placePlayer(rowChoice - 1, columnChoice - 1, activePlayer);
+        }
+        console.log(ticTacToeBoard.toString());
+    }
     const getTicTacToeBoard = () => ticTacToeBoard;
     const getHumanPlayer = () => humanPlayer;
     const getComputerPlayer = () => computerPlayer;
     const getActivePlayer = () => activePlayer;
     return {
+        playRound,
         getTicTacToeBoard,
         getHumanPlayer,
         getComputerPlayer,
@@ -70,6 +83,5 @@ const gameController = (function (
     }
 })();
 
-console.log(gameController.getTicTacToeBoard().toString());
-console.log(gameController.getHumanPlayer().toString());
-console.log(gameController.getComputerPlayer().toString());
+gameController.playRound();
+
