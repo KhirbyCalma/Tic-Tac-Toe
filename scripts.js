@@ -4,7 +4,8 @@ function createPlayer(name, marker) {
     // public methods
     const getName = () => name;
     const getMarker = () => marker;
-    return { getName, getMarker };
+    const toString = () => `${name}: ${marker}`
+    return { getName, getMarker, toString };
 }
 
 // Tic-Tac-Toe Board via Factory Design Pattern
@@ -55,5 +56,5 @@ const gameController = (function (
 })();
 
 console.log(gameController.getTicTacToeBoard().getBoard());
-console.log(`${gameController.getHumanPlayer().getName()}: ${gameController.getHumanPlayer().getMarker()}`);
-console.log(`${gameController.getComputerPlayer().getName()}: ${gameController.getComputerPlayer().getMarker()}`);
+console.log(gameController.getHumanPlayer().toString());
+console.log(gameController.getComputerPlayer().toString());
