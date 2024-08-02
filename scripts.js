@@ -123,13 +123,13 @@ function GameController (
         }
         console.log(ticTacToeBoard.toString());
     }
-    const getTicTacToeBoard = () => ticTacToeBoard;
+    const getBoard = () => ticTacToeBoard.getBoard();
     const getHumanPlayer = () => humanPlayer;
     const getComputerPlayer = () => computerPlayer;
     const getActivePlayer = () => activePlayer;
     return {
         playRound,
-        getTicTacToeBoard,
+        getBoard,
         getHumanPlayer,
         getComputerPlayer,
         getActivePlayer
@@ -146,5 +146,23 @@ function arrayInArray(outerArray, innerArray) {
 const uiController = (function (
     game = GameController()
 ) {
+    const gameGrid = document.getElementById('game-grid');
+    const createCell = (textContent) => {
+        const cellContainer = document.createElement('div');
+        cellContainer.classList = 'game-grid-cell';
+        cellContainer.textContent = textContent;
+        return cellContainer;
+    }
 
+    const updateScreen = () => {
+        const board = game.getBoard();
+        board.forEach((row, rowNumber) => {
+            row.forEach((column, columnNumber) => {
+                const gridCell = createCell(`${rowNumber}, ${columnNumber}`);
+                gameGrid.appendChild(gridCell);
+            });
+        });
+    }
+    // initial load
+    updateScreen();
 })();
