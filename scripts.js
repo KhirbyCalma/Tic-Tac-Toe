@@ -74,7 +74,7 @@ function createBoard() {
     TicTacToe Game Controller via Singleton Design Pattern (factory design pattern in IIFE module pattern)
     - requiring two players and the tic-tac-toe board to start
 */
-const gameController = (function (
+function gameController (
     ticTacToeBoard = createBoard(),
     humanPlayer = createPlayer("You", "X"), 
     computerPlayer = createPlayer("Computer", "O") 
@@ -134,9 +134,7 @@ const gameController = (function (
         getComputerPlayer,
         getActivePlayer
     }
-})();
-
-gameController.playRound();
+};
 
 function arrayInArray(outerArray, innerArray) {
     return outerArray.some(subArray => 
