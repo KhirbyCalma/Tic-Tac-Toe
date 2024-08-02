@@ -35,4 +35,9 @@ main {
 
 footer {
     grid-area: footer;
+    padding: var(--global-spacing);
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
 }
