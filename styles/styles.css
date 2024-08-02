@@ -1,0 +1,23 @@
+body {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "main-content"
+        "footer"
+    ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 5% 1fr 5%;
+    min-height: 100vh;
+}
+
+header {
+    grid-area: header;
+}
+
+main {
+    grid-area: main-content;
+}
+
+footer {
+    grid-area: footer;
+}
