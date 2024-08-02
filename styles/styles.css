@@ -3,6 +3,11 @@ body {
     font-family: "Ubuntu", sans-serif;
 }
 
+:root {
+    --global-spacing: 1rem;
+    --primary-color: #FFC000;
+}
+
 body {
     display: grid;
     grid-template-areas: 
@@ -11,12 +16,17 @@ body {
         "footer"
     ;
     grid-template-columns: 1fr;
-    grid-template-rows: 5% 1fr 5%;
+    grid-template-rows: min-content 1fr min-content;
     min-height: 100vh;
 }
 
 header {
     grid-area: header;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    padding: var(--global-spacing);
 }
 
 main {
